@@ -1,0 +1,120 @@
+# Define a versão da especificação do Docker Compose
+version: '3.8'
+
+services:
+
+  # ==============================
+  # Serviço da aplicação (Laravel / PHP-FPM)
+  # ==============================
+  app:
+    # Constrói a imagem a partir do Dockerfile dentro da pasta backend
+    build:
+      context: ./backend        # Caminho onde está o código da aplicação
+      dockerfile: Dockerfile    # Dockerfile usado para build
+    container_name: produtos_app
+
+    # Mapeia o código da aplicação para dentro do container
+    # Permite edição local refletir automaticamente no container
+    volumes:
+      - ./backend:/var/www
+
+    # Garante que esses serviços iniciem antes do app
+    # (Não garante que estejam prontos, apenas iniciados)
+    depends_on:
+      - mysql
+      - redis
+      - keycloak
+
+    # Conecta o container na rede interna
+    networks:
+      - produtos_net
+
+
+  # ==============================
+  # Servidor Web (Proxy Reverso)
+  # ==============================
+  nginx:
+    image: nginx:latest
+    container_name: produtos_nginx
+
+    # Porta 8000 da máquina -> porta 80 do container
+    ports:
+      - "8000:80"
+
+    # Compartilha o código e substitui a config padrão do Nginx
+    volumes:
+      - ./backend:/var/www
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+
+    # Aguarda o container app iniciar
+    depends_on:
+      - app
+
+    networks:
+      - produtos_net
+
+
+  # ==============================
+  # Banco de Dados MySQL
+  # ==============================
+  mysql:
+    image: mysql:8
+    container_name: produtos_mysql
+
+    # Variáveis de ambiente para criação automática do banco
+    environment:
+      MYSQL_DATABASE: produtos
+      MYSQL_ROOT_PASSWORD: root
+
+    # Expõe porta para acesso externo (apenas desenvolvimento)
+    ports:
+      - "3306:3306"
+
+    networks:
+      - produtos_net
+
+
+  # ==============================
+  # Redis (Cache / Sessões / Filas)
+  # ==============================
+  redis:
+    image: redis:alpine
+    container_name: produtos_redis
+
+    # Porta padrão do Redis
+    ports:
+      - "6379:6379"
+
+    networks:
+      - produtos_net
+
+
+  # ==============================
+  # Keycloak (Autenticação / IAM)
+  # ==============================
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: produtos_keycloak
+
+    # Cria usuário admin automaticamente
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+
+    # Inicia em modo desenvolvimento
+    command: start-dev
+
+    # Acesso via http://localhost:8080
+    ports:
+      - "8080:8080"
+
+    networks:
+      - produtos_net
+
+
+# ==============================
+# Rede interna Docker
+# ==============================
+networks:
+  produtos_net:
+    # Rede bridge padrão para comunicação interna
