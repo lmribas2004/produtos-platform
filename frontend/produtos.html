@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Produtos</title>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">CONTROLE DE PRODUTOS</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Cadastrar Produto</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Consultar Produtos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Gerenciamento de Produtos</h1>
+        <div id="productForm">
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome do Produto</label>
+                <input type="text" class="form-control" id="nome" placeholder="Digite o nome do produto">
+            </div>
+            <div class="mb-3">
+                <label for="preco" class="form-label">Preço</label>
+                <input type="number" class="form-control" id="preco" placeholder="Digite o preço do produto">
+            </div>
+            <div class="mb-3">
+                <label for="quantidade" class="form-label">Quantidade</label>
+                <input type="number" class="form-control" id="quantidade" placeholder="Digite a quantidade do produto">
+            </div>
+            <button class="btn btn-primary" onclick="cadastrarProduto()">Cadastrar</button>
+        </div>
+
+        <hr>
+
+        <h2 class="text-center mb-4">Lista de Produtos</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Preço</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody id="productTableBody">
+                <!-- Produtos serão adicionados dinamicamente aqui -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/produtos.js"></script>
+</body>
+</html>

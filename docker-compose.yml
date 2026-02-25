@@ -4,6 +4,24 @@ version: '3.8'
 services:
 
   # ==============================
+  # Serviço do frontend (NgInx HTML)
+  # ==============================
+  frontend:
+    # Constrói a imagem a partir do Dockerfile dentro da pasta frontend
+    build:
+      context: ./frontend       # Caminho onde está o código do frontend
+      dockerfile: Dockerfile    # Dockerfile usado para build
+    container_name: produtos_frontend
+
+    # Expõe porta 80 do container para a porta 80 da máquina
+    ports:
+      - "3000:80"
+
+    # Conecta o container na rede interna
+    networks:
+      - produtos_net
+
+  # ==============================
   # Serviço da aplicação (Laravel / PHP-FPM)
   # ==============================
   app:
@@ -99,7 +117,7 @@ services:
     # Cria usuário admin automaticamente
     environment:
       KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+      KEYCLOAK_ADMIN_PASSWORD: ga201000
 
     # Inicia em modo desenvolvimento
     command: start-dev
