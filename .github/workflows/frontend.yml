@@ -29,6 +29,9 @@ jobs:
       run:
         working-directory: frontend
     steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
       - name: Compilando aplicação
         run: echo "Iniciando o processo de compilação!"
 
@@ -39,5 +42,8 @@ jobs:
       run:
         working-directory: frontend
     steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+        
       - name: Iniciando implantação
         run: echo "Iniciando a implantação do projeto!"
