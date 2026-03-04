@@ -40,6 +40,9 @@ jobs:
       - name: Instalar as dependências (Composer)
         run: composer install --no-interaction --prefer-dist
 
+      - name: Copiar .env
+        run: cp .env.example .env
+
       - name: Gerar chave da aplicação
         run: php artisan key:generate
 

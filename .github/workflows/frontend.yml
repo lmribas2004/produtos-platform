@@ -1,0 +1,43 @@
+name: Frontend CI - Treinamento TJ/PR COTI Informatica
+
+# ==================================
+# ON
+# Eventos que executam a pipelines
+# ==================================
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "frontend/**"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "frontend/**"
+
+# ==================================
+# JOBS
+# Tarefas executadas pela pipeline
+# ==================================
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Compilando aplicação
+        run: echo "Iniciando o processo de compilação!"
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Iniciando implantação
+        run: echo "Iniciando a implantação do projeto!"
