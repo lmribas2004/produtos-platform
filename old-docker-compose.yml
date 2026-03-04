@@ -90,7 +90,6 @@ services:
 
     networks:
       - produtos_net
-
     volumes:
       - ./mysql-data:/var/lib/mysql  #Local para guardar os dados do MySQL      
 
@@ -119,7 +118,7 @@ services:
     # Cria usuário admin automaticamente
     environment:
       KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: admin
+      KEYCLOAK_ADMIN_PASSWORD: ga201000
 
     # Inicia em modo desenvolvimento
     command: start-dev
@@ -131,22 +130,6 @@ services:
     volumes:
       - keycloak_data:/opt/keycloak/data
 
-    networks:
-      - produtos_net
-
-  # ==============================
-  # PHP MyAdmin (Acesso aos bancos de dados)
-  # ==============================
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: produtos_phpmyadmin
-    environment:
-      PMA_HOST: mysql
-      PMA_PORT: 3306
-    ports:
-      - "8081:80"
-    depends_on:
-      - mysql
     networks:
       - produtos_net
 
@@ -162,4 +145,4 @@ networks:
 # ==============================
 volumes:
   keycloak_data:
-  mysql-data:    
+  mysql-data:
