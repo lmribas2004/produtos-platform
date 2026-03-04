@@ -12,7 +12,7 @@ class ProdutoTest extends TestCase
 {
     #Usar a trait 'RefreshDatabase' para garantir que o banco 
     #de dados seja limpo e atualizado antes de cada teste
-    //use RefreshDatabase;
+    use RefreshDatabase;
 
     /*
         Método 'setUp' é executado antes de cada teste.
