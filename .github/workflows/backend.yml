@@ -85,7 +85,7 @@ jobs:
         run: cp .env.example .env.testing
 
       - name: Configurar as variáveis de ambiente para testes
-        run:
+        run: |
           echo "APP_ENV=testing" >> .env.testing
           echo "DB_CONNECTION=mysql" >> .env.testing
           echo "DB_HOST=127.0.0.1" >> .env.testing
