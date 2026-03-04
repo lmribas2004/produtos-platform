@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Exception;
 
 /*
-Controlador de API para gerenciamento de produtos.
+Controlador de API para gerenciamento de produtos REST.
 */
 class ProdutoController extends Controller
 {
