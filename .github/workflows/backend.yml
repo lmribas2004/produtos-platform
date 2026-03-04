@@ -125,12 +125,28 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: test
+
     defaults:
       run:
         working-directory: backend
+
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Iniciando implantação
-        run: echo "Iniciando a implantação do projeto!"
+      - name: Login no Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build da imagem Docker
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/produtos-api:latest .
+
+      - name: Push para Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/produtos-api:latest
+
+      - name: Deploy concluído
+        run: echo "Imagem publicada com sucesso no Docker Hub!"
