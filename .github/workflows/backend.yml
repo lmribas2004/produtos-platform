@@ -104,8 +104,23 @@ jobs:
       - name: Executar migrations no banco de teste
         run: php artisan migrate --env=testing
 
-      - name: Executar testes
-        run: php artisan test --env=testing
+      - name: Executar testes com relatório
+        run: |
+          ./vendor/bin/phpunit \
+            --log-junit report.xml \
+            --coverage-html coverage
+
+      - name: Upload do relatório JUnit
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-report
+          path: backend/report.xml
+
+      - name: Upload da cobertura de código
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: backend/coverage
 
   deploy:
     runs-on: ubuntu-latest
