@@ -56,6 +56,9 @@ jobs:
       run:
         working-directory: backend
     steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+        
       - name: Iniciando testes
         run: echo "Iniciando o processo de testes!"
 
@@ -66,5 +69,8 @@ jobs:
       run:
         working-directory: backend
     steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
       - name: Iniciando implantação
         run: echo "Iniciando a implantação do projeto!"
